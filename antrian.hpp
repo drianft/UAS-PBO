@@ -1,8 +1,8 @@
 /*******************
- * Nama File : antrian.hpp
- * Pembuat : Andrian James Siregar
- *           Darren Wangsa
- *           Sanny Lie
+ * Nama File : main.cpp
+ * Pembuat : Andrian James Siregar (241402096)
+ *           Darren Wangsa (241402074)
+ *           Sanny Lie (241402093)
  * Deskripsi : Program ini adalah header dari sistem queue kami.
  ******************/
 #ifndef ANTRIAN_HPP

@@ -1,9 +1,9 @@
 /*******************
- * Nama File : antrian.hpp
- * Pembuat : Andrian James Siregar
- *           Darren Wangsa
- *           Sanny Lie
- * Deskripsi : Program ini adalah header dari sistem queue kami.
+ * Nama File : main.cpp
+ * Pembuat : Andrian James Siregar (241402096)
+ *           Darren Wangsa (241402074)
+ *           Sanny Lie (241402093)
+ * Deskripsi : Program ini adalah isi function dari sistem queue kami.
  ******************/
 #include "antrian.hpp"
 #include <iostream>
@@ -56,7 +56,9 @@ void antrian :: updateVector() {
             if (cust[i].idCust > lastId)
                 lastId = cust[i].idCust;
 
+            front = 0;
             i++;
+            rear = i;
         }
 }
 
@@ -87,6 +89,16 @@ void antrian :: enqueueAntrian(){
 
     ofstream listAntrian("antrian.txt", ios::app);
         listAntrian << lastId+1 << "|" << namaTemp << "|" << noTelpTemp << "|" << waktuMasukTemp << endl;
+}
+
+void antrian :: dequeueAntrian(){
+    updateVector();
+    if(isEmpty()){
+        cout << BOLD RED << "Antrian Kosong!\n" << RESET;
+    }
+    else if(!isEmpty()){
+        cout << BOLD CYAN << cust[front].namaCust << RESET BLUE << " dipersilahkan untuk masuk ke konter.\n";
+    }
 }
 
 int antrian :: cekAntrian(){
