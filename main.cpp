@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream> 
+using namespace std;
 
 #define RESET       "\033[0m"
 #define BLACK       "\033[30m"
@@ -34,7 +35,53 @@
 
 int main(){
     antrian a;
-    konter k;
-    
-    cout
+    // konter k;
+    int inp;
+    string loop;
+
+    do{
+        system("cls");
+        cout << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl
+             << setfill(' ') << setw(30) << " " << BOLD BLUE << "Tugas 4 Pemrograman Berorientasi Objek\n"
+             << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl << setfill(' ');
+        
+        cout << YELLOW << "1. Daftar Pasien\n2. Panggil Pasien\n3. Manajemen Konter (Tampilkan isi/Dequeue/Clear Konter)\n4. Rata-rata lama layanan\n5. Exit\n" 
+            << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET YELLOW << endl << setfill(' ') << "Apa yang ingin anda lakukan? (1/2/3/4/5) : " << GREEN;
+        cin >> inp;
+        cout << RESET;
+
+        switch(inp){
+            case 1:
+                a.enqueueAntrian();
+                break;
+            case 2:
+                a.dequeueAntrian();
+                //enqueue konter
+                break;
+            case 3:
+                //main konter
+                break;
+            case 4:
+                //rata-rata lama layanan
+                break;
+            case 5:
+                cout << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl
+                    << setfill(' ') << setw(38) << " " << BOLD RED << "Program berhenti...\n"
+                    << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl << setfill(' ');
+                return 0;
+        }
+
+        cout << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl << setfill(' ');
+        cout << GREEN << "Apakah anda melanjutkan program? (Yes/No) " << RESET;
+        cin >> loop;
+
+        for (char &c : loop) {
+            c = tolower(c);
+        }
+    } while (loop != "no" && loop != "n");
+
+    cout << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl
+         << setfill(' ') << setw(38) << " " << BOLD RED << "Program berhenti...\n"
+         << BOLD CYAN << setfill('=') << setw(100) << "=" << RESET << endl << setfill(' ');
+    return 0;
 }
