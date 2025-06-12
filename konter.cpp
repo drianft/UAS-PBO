@@ -24,8 +24,8 @@ void konter::DequeueKonter() {
     cin.ignore();
 
     if (nomorKonter > 0 && nomorKonter <= MAX && !listKonter[nomorKonter - 1].empty()) {
-        time_t selesai = time(0);
-        int durasiLayanan = rand() % 5 + 1;
+        int durasiLayanan = rand() % 5 + 1; // durasi dalam menit
+        time_t selesai = listKonter[nomorKonter - 1].waktuPanggil + (durasiLayanan * 60); // waktu selesai = waktu panggil + durasi
 
         cout << "Pelanggan " << listKonter[nomorKonter - 1].namaCust << " selesai dilayani di konter " << nomorKonter << "." << endl;
 
@@ -36,13 +36,13 @@ void konter::DequeueKonter() {
                 << durasiLayanan << "|"
                 << put_time(localtime(&selesai), "%H:%M:%S") << endl;
 
-        listKonter[nomorKonter - 1] = customer();
-        logStatusKonter();
-
+        listKonter[nomorKonter - 1] = customer(); // Kosongkan konter
+        logStatusKonter(); // Update status setelah dequeue
     } else {
         cout << "Nomor konter tidak valid atau konter kosong." << endl;
     }
 }
+
 
 double konter::AvgService() {
     ifstream history("history.txt");
@@ -73,8 +73,8 @@ void konter::clearKonter() {
 
     for (int i = 0; i < MAX; i++) {
         if (!listKonter[i].empty()) {
-            time_t selesai = time(0);
-            int durasiLayanan = rand() % 5 + 1;
+            int durasiLayanan = rand() % 5 + 1; // durasi dalam menit
+            time_t selesai = listKonter[i].waktuPanggil + (durasiLayanan * 60); // waktu selesai = waktu panggil + durasi
 
             cout << "Pelanggan " << listKonter[i].namaCust << " selesai dilayani di konter " << i + 1 << "." << endl;
 
@@ -84,16 +84,15 @@ void konter::clearKonter() {
                     << durasiLayanan << "|"
                     << put_time(localtime(&selesai), "%H:%M:%S") << endl;
 
-            listKonter[i] = customer(); // kosongkan konter
-            logStatusKonter();
-
+            listKonter[i] = customer(); // Kosongkan konter
+            logStatusKonter(); // Update status setelah clear
         }
     }
 
     cout << "Semua konter telah dikosongkan." << endl;
     history.close();
-
 }
+
 
 void konter::assignCustomer(customer cust) {
     
@@ -101,6 +100,7 @@ void konter::assignCustomer(customer cust) {
         if (listKonter[i].empty()) {
             cust.waktuPanggil = time(0); // waktu mulai dilayani
             listKonter[i] = cust;
+            listKonter[i].waktuMasuk = time(0); // waktu masuk ke antrian
             cout << "Pelanggan " << cust.namaCust << " masuk ke konter " << i + 1 << endl;
             return;
         }
@@ -143,5 +143,39 @@ void konter::logStatusKonter() {
     }
 }
 
+void konter::readStatusKonter() {
+    ifstream file("status_konter.txt");
+    if (!file) {
+        cout << "File status konter tidak ditemukan." << endl;
+        return;
+    }
+
+    for (int i = 0; i < MAX; i++) {
+        string nama, noTelp, waktuMasukStr, waktuPanggilStr;
+        getline(file, nama, '|');
+        getline(file, noTelp, '|');
+        getline(file, waktuMasukStr, '|');
+        getline(file, waktuPanggilStr);
+
+        if (nama.empty()) { // Kalau tidak ada data
+            listKonter[i] = customer(); // Kosongkan slot
+        } else {
+            listKonter[i].namaCust = nama;
+            listKonter[i].noTelpCust = noTelp;
+
+            struct tm tmMasuk = {};
+            istringstream ssMasuk(waktuMasukStr);
+            ssMasuk >> get_time(&tmMasuk, "%H:%M:%S");
+            listKonter[i].waktuMasuk = mktime(&tmMasuk);
+
+            struct tm tmPanggil = {};
+            istringstream ssPanggil(waktuPanggilStr);
+            ssPanggil >> get_time(&tmPanggil, "%H:%M:%S");
+            listKonter[i].waktuPanggil = mktime(&tmPanggil);
+        }
+    }
+
+    file.close();
+}
 
 

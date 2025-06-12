@@ -37,7 +37,6 @@ using namespace std;
 int main() {
     antrian a;
     konter k;
-    k.clearKonter(); // Inisialisasi konter kosong
     int inp;
     string loop;
 
@@ -63,7 +62,6 @@ int main() {
                     cout << "Semua konter sedang sibuk." << endl;
                 } else {
                     customer cust = a.dequeueAntrian(k);
-                    k.assignCustomer(cust);
                 } 
                 break;
             }

@@ -79,6 +79,7 @@ void antrian::updateVector() {
 }
 
 bool antrian::isEmpty() {
+    updateVector(); // Refresh antrian dari file
     return front == -1 || front >= rear;
 }
 
@@ -123,6 +124,7 @@ void antrian::removeFront() {
 
 customer antrian::dequeueAntrian(konter &k) {
     updateVector(); // Refresh antrian dari file
+    k.readStatusKonter();
 
     if (isEmpty()) {
         cout << BOLD RED << "Antrian Kosong!\n" << RESET;
@@ -154,6 +156,7 @@ customer antrian::dequeueAntrian(konter &k) {
         // Hapus file lama, ganti dengan file baru
         remove("antrian.txt");
         rename("temp.txt", "antrian.txt");
+        k.logStatusKonter();
 
         return nextCustomer;
     }

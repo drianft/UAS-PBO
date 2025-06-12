@@ -32,6 +32,7 @@ public:
     void assignCustomer(customer cust);
     bool isFull();
     void logStatusKonter();
+    void readStatusKonter();
 };
 
 #endif
