@@ -13,33 +13,26 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream> 
-
+#include "customer.hpp"
 using namespace std;
 
-struct customer{
-    int idCust;
-    string namaCust, noTelpCust;
-    time_t waktuMasuk, waktuPanggil, waktuKeluar;
-
-    bool empty(){
-        return namaCust.empty() && noTelpCust.empty() && idCust == 0;
-    }
-};
+class konter; // Forward declaration of konter class
 
 
-class antrian{
-    private:
-        vector<customer> cust;
-        int MAX = 100;
-        int front = -1, rear = -1, lastId = 0;
-        
-    public:
-        antrian();
-        void updateVector();
-        bool isEmpty();
-        void enqueueAntrian(); // tulis ke file antrian langsung
-        void dequeueAntrian(); // lanjut ke konter (dipanggil ke konter)
-        int cekAntrian();
+class antrian {
+private:
+    vector<customer> cust;
+    int MAX = 100;
+    int front = -1, rear = -1, lastId = 0;
+
+public:
+    antrian();
+    void updateVector();
+    bool isEmpty();
+    void enqueueAntrian();
+    customer dequeueAntrian(konter &k);
+    int cekAntrian();
+    void removeFront();
 };
 
 #endif

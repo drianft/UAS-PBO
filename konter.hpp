@@ -1,24 +1,37 @@
 /*******************
- * Nama File : antrian.hpp
+ * Nama File : konter.hpp
  * Pembuat : Andrian James Siregar
  *           Darren Wangsa
  *           Sanny Lie
- * Deskripsi : Program ini adalah header dari sistem queue kami.
+ * Deskripsi : Header file untuk class konter pada sistem antrian.
  ******************/
+
+#ifndef KONTER_HPP
+#define KONTER_HPP
+
 #include "antrian.hpp"
 #include <iostream>
-#include <queue>
+#include <fstream>
 #include <ctime>
 #include <iomanip>
-#include <fstream>
-#include <sstream> 
-
+#include "customer.hpp"
 using namespace std;
 
-class konter{
-    private:
-        vector <customer> konter;
-        int MAX = 6;
 
-    public:
-}
+
+class konter {
+private:
+    customer listKonter[6];
+    int MAX = 6;
+
+public:
+    void displayKonter();
+    double AvgService();
+    void DequeueKonter();
+    void clearKonter();
+    void assignCustomer(customer cust);
+    bool isFull();
+    void logStatusKonter();
+};
+
+#endif
